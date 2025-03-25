@@ -30,6 +30,27 @@ document.getElementById('calculateBtn').addEventListener('click', function () {
     document.getElementById('pricingResults').innerHTML = `<h2>報價結果</h2>${pricingResults}`;
 });
 
+// 新增數量區間
+document.getElementById('addQuantityBtn').addEventListener('click', function () {
+    const quantityFields = document.getElementById('quantityFields');
+    const newQuantityGroup = document.createElement('div');
+    newQuantityGroup.classList.add('quantity-group');
+    
+    const quantityInput = document.createElement('input');
+    quantityInput.type = 'number';
+    quantityInput.classList.add('quantity');
+    quantityInput.placeholder = '數量 MOQ';
+    
+    const profitInput = document.createElement('input');
+    profitInput.type = 'number';
+    profitInput.classList.add('profit');
+    profitInput.placeholder = '利潤 (%)';
+    
+    newQuantityGroup.appendChild(quantityInput);
+    newQuantityGroup.appendChild(profitInput);
+    quantityFields.appendChild(newQuantityGroup);
+});
+
 // 生成 PDF
 document.getElementById('generatePDFBtn').addEventListener('click', function () {
     const { jsPDF } = window.jspdf;
