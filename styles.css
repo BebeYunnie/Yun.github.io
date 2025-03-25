@@ -42,10 +42,11 @@ button:hover {
 .material-group {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 10px;
 }
 
-.material-group {
-    margin-bottom: 10px;
+.material-group input {
+    width: 45%;
 }
 
 .material-total {

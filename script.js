@@ -61,7 +61,7 @@ document.getElementById('generatePDFBtn').addEventListener('click', function () 
     doc.text(`業務: ${document.getElementById('salesPerson').value}`, 10, 30);
 
     document.querySelectorAll('.quantity').forEach((q, i) => {
-        doc.text(`MOQ: ${q.value}, 數量: ${document.querySelectorAll('.profit')[i].value}`, 10, 40 + (i * 10));
+        doc.text(`MOQ: ${q.value}, 利潤: ${document.querySelectorAll('.profit')[i].value}%`, 10, 40 + (i * 10));
     });
 
     doc.save('報價單.pdf');
