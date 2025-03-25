@@ -51,18 +51,18 @@ document.getElementById('addQuantityBtn').addEventListener('click', function () 
     quantityFields.appendChild(newQuantityGroup);
 });
 
-// 生成 PDF
-document.getElementById('generatePDFBtn').addEventListener('click', function () {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
+// 生成 PNG
+document.getElementById('generatePNGBtn').addEventListener('click', function () {
+    // 获取内容区域（可选：只生成特定区域的图像）
+    const content = document.querySelector('.container');
 
-    doc.text(`報價單`, 10, 10);
-    doc.text(`日期: ${document.getElementById('quoteDate').value}`, 10, 20);
-    doc.text(`業務: ${document.getElementById('salesPerson').value}`, 10, 30);
-
-    document.querySelectorAll('.quantity').forEach((q, i) => {
-        doc.text(`MOQ: ${q.value}, 利潤: ${document.querySelectorAll('.profit')[i].value}%`, 10, 40 + (i * 10));
+    // 使用 html2canvas 将页面区域渲染成图像
+    html2canvas(content).then(function(canvas) {
+        // 创建PNG文件并下载
+        const imgData = canvas.toDataURL("image/png");
+        const link = document.createElement('a');
+        link.href = imgData;
+        link.download = '報價單.png';
+        link.click();
     });
-
-    doc.save('報價單.pdf');
 });
