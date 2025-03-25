@@ -1,35 +1,43 @@
-document.getElementById('calculateBtn').addEventListener('click', function() {
+document.getElementById('calculateBtn').addEventListener('click', function () {
     const quoteDate = document.getElementById('quoteDate').value;
     const salesPerson = document.getElementById('salesPerson').value;
+    const factoryCost = parseFloat(document.getElementById('factoryCost').value);
+    const otherCosts = parseFloat(document.getElementById('otherCosts').value);
 
-    // 取得 MOQ 和單價的數值
-    const quantity = document.querySelector('.quantity').value;
-    const price = document.querySelector('.material-price').value;
+    const materials = document.querySelectorAll('.material-group');
+    let totalMaterialCost = 0;
+    materials.forEach(material => {
+        const price = parseFloat(material.querySelector('.material-price').value);
+        const qty = parseInt(material.querySelector('.material-qty').value);
+        const total = price * qty;
+        material.querySelector('.material-total').textContent = total.toFixed(2);
+        totalMaterialCost += total;
+    });
 
-    // 顯示報價結果
-    const pricingResults = document.getElementById('pricingResults');
-    pricingResults.innerHTML = `
-        <p>日期: ${quoteDate}</p>
-        <p>業務: ${salesPerson}</p>
-        <p>MOQ: ${quantity}</p>
-        <p>單價: ${price}</p>
-    `;
+    const quantities = document.querySelectorAll('.quantity-group');
+    let pricingResultsHtml = '';
+    quantities.forEach(quantity => {
+        const moq = parseInt(quantity.querySelector('.quantity').value);
+        const profit = parseFloat(quantity.querySelector('.profit').value);
+
+        if (moq > 0 && profit >= 0) {
+            const cost = factoryCost + totalMaterialCost + otherCosts;
+            const priceWithProfit = cost * (1 + profit / 100);
+            pricingResultsHtml += `<p>MOQ: ${moq} 單價: $${priceWithProfit.toFixed(2)}</p>`;
+        }
+    });
+
+    document.getElementById('pricingResults').innerHTML = pricingResultsHtml;
+    document.getElementById('pricingResults').style.display = 'block';
 });
 
-// 下載 PNG 圖片
+// 下載PNG
 document.getElementById('generatePNGBtn').addEventListener('click', function () {
-    // 取得報價結果區塊
     const pricingResults = document.getElementById('pricingResults');
-
-    // 使用 html2canvas 生成 PNG
-    html2canvas(pricingResults).then(function(canvas) {
-        // 轉換為 PNG 並下載
-        const image = canvas.toDataURL("image/png");
-
-        // 創建下載連結
+    html2canvas(pricingResults).then(function (canvas) {
         const link = document.createElement('a');
-        link.href = image;
         link.download = '報價結果.png';
+        link.href = canvas.toDataURL('image/png');
         link.click();
     });
 });
