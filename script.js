@@ -51,6 +51,32 @@ document.getElementById('addQuantityBtn').addEventListener('click', function () 
     quantityFields.appendChild(newQuantityGroup);
 });
 
+// 新增客供料
+document.getElementById('addMaterialBtn').addEventListener('click', function () {
+    const materialFields = document.getElementById('materialFields');
+    const newMaterialGroup = document.createElement('div');
+    newMaterialGroup.classList.add('material-group');
+
+    const priceInput = document.createElement('input');
+    priceInput.type = 'number';
+    priceInput.classList.add('material-price');
+    priceInput.placeholder = '單價 ($)';
+
+    const qtyInput = document.createElement('input');
+    qtyInput.type = 'number';
+    qtyInput.classList.add('material-qty');
+    qtyInput.placeholder = '數量';
+
+    const totalSpan = document.createElement('span');
+    totalSpan.classList.add('material-total');
+    totalSpan.textContent = '$0.00';
+
+    newMaterialGroup.appendChild(priceInput);
+    newMaterialGroup.appendChild(qtyInput);
+    newMaterialGroup.appendChild(totalSpan);
+    materialFields.appendChild(newMaterialGroup);
+});
+
 // 生成 PDF
 document.getElementById('generatePDFBtn').addEventListener('click', function () {
     const { jsPDF } = window.jspdf;

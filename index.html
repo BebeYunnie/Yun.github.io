@@ -3,69 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>報價計算器</title>
+    <title>報價單 App</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- 引入 jsPDF CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.27/jspdf.plugin.autotable.min.js"></script>
 </head>
 <body>
     <div class="container">
-        <h1>報價計算器</h1>
+        <h1>業務報價單</h1>
 
-        <label>日期:</label>
+        <!-- 日期與業務欄位 -->
+        <label for="quoteDate">日期:</label>
         <input type="date" id="quoteDate">
+        
+        <label for="salesPerson">業務:</label>
+        <input type="text" id="salesPerson">
 
-        <label>業務:</label>
-        <input type="text" id="salesPerson" placeholder="輸入業務姓名">
+        <!-- 工廠成本 -->
+        <label for="factoryCost">工廠成本 ($/m):</label>
+        <input type="number" id="factoryCost">
 
-        <label>工廠成本 ($/m):</label>
-        <input type="number" id="factoryCost" value="0">
-
-        <h3>客供料成本 ($/組)</h3>
-        <div id="customerMaterials">
+        <!-- 客供料成本 -->
+        <div id="materialFields">
+            <h3>客供料成本</h3>
             <div class="material-group">
-                <input type="number" class="material-price" placeholder="單價 ($)" value="0">
-                <input type="number" class="material-qty" placeholder="數量" value="0">
-                <span class="material-total">0</span>
-            </div>
-            <div class="material-group">
-                <input type="number" class="material-price" placeholder="單價 ($)" value="0">
-                <input type="number" class="material-qty" placeholder="數量" value="0">
-                <span class="material-total">0</span>
-            </div>
-            <div class="material-group">
-                <input type="number" class="material-price" placeholder="單價 ($)" value="0">
-                <input type="number" class="material-qty" placeholder="數量" value="0">
-                <span class="material-total">0</span>
-            </div>
-            <div class="material-group">
-                <input type="number" class="material-price" placeholder="單價 ($)" value="0">
-                <input type="number" class="material-qty" placeholder="數量" value="0">
-                <span class="material-total">0</span>
+                <label>單價 ($):</label>
+                <input type="number" class="material-price">
+                <label>數量:</label>
+                <input type="number" class="material-qty">
+                <span class="material-total">$0.00</span>
             </div>
         </div>
+        <button id="addMaterialBtn">新增客供料</button>
 
-        <label>其他費用 ($):</label>
-        <input type="number" id="otherCosts" value="0">
+        <!-- 其他費用 -->
+        <label for="otherCosts">其他費用:</label>
+        <input type="number" id="otherCosts">
 
-        <h3>不同 MOQ 與利潤 (%)</h3>
-        <div id="quantityFields">
-            <div class="quantity-group">
-                <input type="number" class="quantity" placeholder="數量 MOQ" value="0">
-                <input type="number" class="profit" placeholder="利潤 (%)" value="0">
-            </div>
-        </div>
-
+        <!-- 數量與利潤 -->
+        <h3>數量區間與利潤</h3>
+        <div id="quantityFields"></div>
         <button id="addQuantityBtn">新增數量區間</button>
+
+        <!-- 計算報價與生成PDF -->
         <button id="calculateBtn">計算報價</button>
+        <button id="generatePDFBtn">生成報價單 PDF</button>
 
-        <div id="pricingResults">
-            <h2>報價結果</h2>
-        </div>
-
-        <button id="generatePDF">📄 生成 PDF 報價單</button>
+        <!-- 顯示報價結果 -->
+        <div id="pricingResults"></div>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
