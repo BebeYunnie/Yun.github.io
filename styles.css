@@ -1,63 +1,87 @@
 body {
     font-family: Arial, sans-serif;
-    padding: 20px;
     margin: 0;
+    padding: 0;
     background-color: #f4f4f4;
-    text-align: center;
 }
 
 .container {
-    max-width: 400px;
-    margin: auto;
-    background: #fff;
+    width: 80%;
+    max-width: 800px;
+    margin: 50px auto;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
 }
 
 input {
-    width: calc(100% - 20px);
-    padding: 10px;
-    margin: 5px 0;
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 12px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 4px;
+    font-size: 16px;
 }
 
 button {
     width: 100%;
     padding: 10px;
-    margin-top: 10px;
-    background: #007bff;
-    color: #fff;
+    margin-top: 12px;
+    background-color: #007BFF;
+    color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 4px;
+    font-size: 16px;
     cursor: pointer;
 }
 
 button:hover {
-    background: #0056b3;
+    background-color: #0056b3;
 }
 
-.quantity-group,
-.material-group {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-}
-
-.material-group input {
-    width: 45%;
-}
-
-.material-total {
-    margin-left: 10px;
-    font-weight: bold;
+h3 {
+    margin-top: 20px;
     color: #333;
 }
 
-@media (max-width: 600px) {
-    .container {
-        width: 100%;
-        padding: 15px;
-    }
+.material-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.material-total {
+    font-weight: bold;
+    color: green;
+}
+
+.quantity-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.quantity-group input {
+    width: 45%;
+}
+
+#pricingResults {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
 }
