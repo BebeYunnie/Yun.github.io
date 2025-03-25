@@ -1,3 +1,4 @@
+// 計算報價並顯示結果
 document.getElementById('calculateBtn').addEventListener('click', function () {
     const factoryCost = parseFloat(document.getElementById('factoryCost').value) || 0;
     
@@ -65,4 +66,22 @@ document.getElementById('generatePDFBtn').addEventListener('click', function () 
     });
 
     doc.save('報價單.pdf');
+});
+
+// 下載 PNG
+document.getElementById('generatePNGBtn').addEventListener('click', function () {
+    // 取得報價結果區塊
+    const pricingResults = document.getElementById('pricingResults');
+
+    // 生成圖片
+    html2canvas(pricingResults).then(function(canvas) {
+        // 轉換成 PNG 並下載
+        const image = canvas.toDataURL("image/png");
+
+        // 創建 a 元素並觸發下載
+        const link = document.createElement('a');
+        link.href = image;
+        link.download = '報價結果.png';
+        link.click();
+    });
 });
