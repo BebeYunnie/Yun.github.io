@@ -34,10 +34,16 @@ document.getElementById('calculateBtn').addEventListener('click', function () {
 // 下載PNG
 document.getElementById('generatePNGBtn').addEventListener('click', function () {
     const pricingResults = document.getElementById('pricingResults');
-    html2canvas(pricingResults).then(function (canvas) {
+    html2canvas(pricingResults, {
+        useCORS: true, // 啟用 CORS 支援，避免某些圖片因跨域問題無法渲染
+        logging: true, // 設為 true 可以檢查渲染過程中的 log
+        allowTaint: true, // 允許渲染有問題的圖片資源
+    }).then(function (canvas) {
         const link = document.createElement('a');
         link.download = '報價結果.png';
         link.href = canvas.toDataURL('image/png');
         link.click();
+    }).catch(function (error) {
+        console.error("下載失敗:", error);
     });
 });
