@@ -1,84 +1,32 @@
-// 計算報價並顯示結果
-document.getElementById('calculateBtn').addEventListener('click', function () {
-    const factoryCost = parseFloat(document.getElementById('factoryCost').value) || 0;
-    
-    let totalMaterialCost = 0;
-    document.querySelectorAll('.material-group').forEach(group => {
-        const price = parseFloat(group.querySelector('.material-price').value) || 0;
-        const qty = parseInt(group.querySelector('.material-qty').value) || 0;
-        const total = price * qty;
-        group.querySelector('.material-total').textContent = `$${total.toFixed(2)}`;
-        totalMaterialCost += total;
-    });
+document.getElementById('calculateBtn').addEventListener('click', function() {
+    const quoteDate = document.getElementById('quoteDate').value;
+    const salesPerson = document.getElementById('salesPerson').value;
 
-    const otherCosts = parseFloat(document.getElementById('otherCosts').value) || 0;
-    const totalCost = factoryCost + totalMaterialCost + otherCosts;
+    // 取得 MOQ 和單價的數值
+    const quantity = document.querySelector('.quantity').value;
+    const price = document.querySelector('.material-price').value;
 
-    const quantities = document.querySelectorAll('.quantity');
-    const profits = document.querySelectorAll('.profit');
-    let pricingResults = '';
-
-    quantities.forEach((quantityInput, index) => {
-        const quantity = parseInt(quantityInput.value) || 0;
-        const profit = parseFloat(profits[index].value) || 0;
-        const totalPrice = totalCost + (profit / 100) * totalCost;
-
-        if (quantity > 0) {
-            pricingResults += `<p>MOQ: ${quantity} | 利潤: ${profit}% | 總價: $${totalPrice.toFixed(2)}</p>`;
-        }
-    });
-
-    document.getElementById('pricingResults').innerHTML = `<h2>報價結果</h2>${pricingResults}`;
+    // 顯示報價結果
+    const pricingResults = document.getElementById('pricingResults');
+    pricingResults.innerHTML = `
+        <p>日期: ${quoteDate}</p>
+        <p>業務: ${salesPerson}</p>
+        <p>MOQ: ${quantity}</p>
+        <p>單價: ${price}</p>
+    `;
 });
 
-// 新增數量區間
-document.getElementById('addQuantityBtn').addEventListener('click', function () {
-    const quantityFields = document.getElementById('quantityFields');
-    const newQuantityGroup = document.createElement('div');
-    newQuantityGroup.classList.add('quantity-group');
-    
-    const quantityInput = document.createElement('input');
-    quantityInput.type = 'number';
-    quantityInput.classList.add('quantity');
-    quantityInput.placeholder = '數量 MOQ';
-    
-    const profitInput = document.createElement('input');
-    profitInput.type = 'number';
-    profitInput.classList.add('profit');
-    profitInput.placeholder = '利潤 (%)';
-    
-    newQuantityGroup.appendChild(quantityInput);
-    newQuantityGroup.appendChild(profitInput);
-    quantityFields.appendChild(newQuantityGroup);
-});
-
-// 生成 PDF
-document.getElementById('generatePDFBtn').addEventListener('click', function () {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-
-    doc.text(`報價單`, 10, 10);
-    doc.text(`日期: ${document.getElementById('quoteDate').value}`, 10, 20);
-    doc.text(`業務: ${document.getElementById('salesPerson').value}`, 10, 30);
-
-    document.querySelectorAll('.quantity').forEach((q, i) => {
-        doc.text(`MOQ: ${q.value}, 利潤: ${document.querySelectorAll('.profit')[i].value}%`, 10, 40 + (i * 10));
-    });
-
-    doc.save('報價單.pdf');
-});
-
-// 下載 PNG
+// 下載 PNG 圖片
 document.getElementById('generatePNGBtn').addEventListener('click', function () {
     // 取得報價結果區塊
     const pricingResults = document.getElementById('pricingResults');
 
-    // 生成圖片
+    // 使用 html2canvas 生成 PNG
     html2canvas(pricingResults).then(function(canvas) {
-        // 轉換成 PNG 並下載
+        // 轉換為 PNG 並下載
         const image = canvas.toDataURL("image/png");
 
-        // 創建 a 元素並觸發下載
+        // 創建下載連結
         const link = document.createElement('a');
         link.href = image;
         link.download = '報價結果.png';
