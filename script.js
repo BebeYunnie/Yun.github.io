@@ -53,16 +53,18 @@ document.getElementById('addQuantityBtn').addEventListener('click', function () 
 
 // 生成 PNG
 document.getElementById('generatePNGBtn').addEventListener('click', function () {
-    // 获取内容区域（包括日期、业务、MOQ和单价信息）
+    // 获取内容区域（包括日期、業務、MOQ和利潤信息）
     const content = document.querySelector('.container');
 
     // 使用 html2canvas 将页面区域渲染成图像
     html2canvas(content).then(function(canvas) {
         // 创建PNG文件并下载
         const imgData = canvas.toDataURL("image/png");
+
+        // 创建链接下载 PNG
         const link = document.createElement('a');
         link.href = imgData;
-        link.download = '報價單.png';
-        link.click();
+        link.download = '報價單.png';  // 指定下载文件的名称
+        link.click();  // 自动触发下载
     });
 });
