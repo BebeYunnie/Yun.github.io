@@ -56,13 +56,40 @@ document.getElementById('generatePDFBtn').addEventListener('click', function () 
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
-    doc.text(`報價單`, 10, 10);
-    doc.text(`日期: ${document.getElementById('quoteDate').value}`, 10, 20);
-    doc.text(`業務: ${document.getElementById('salesPerson').value}`, 10, 30);
+    // 获取表单数据
+    const quoteDate = document.getElementById('quoteDate').value || '未填寫';
+    const salesPerson = document.getElementById('salesPerson').value || '未填寫';
+    
+    // 设置字体和字号
+    doc.setFont('Helvetica');
+    doc.setFontSize(12);
 
-    document.querySelectorAll('.quantity').forEach((q, i) => {
-        doc.text(`MOQ: ${q.value}, 利潤: ${document.querySelectorAll('.profit')[i].value}%`, 10, 40 + (i * 10));
+    // 添加標題
+    doc.text("報價單", 10, 10);
+    
+    // 添加日期和業務信息
+    doc.text(`日期: ${quoteDate}`, 10, 20);
+    doc.text(`業務: ${salesPerson}`, 10, 30);
+
+    let yPosition = 40;
+    
+    // 添加客供料信息
+    document.querySelectorAll('.material-group').forEach((group, index) => {
+        const price = group.querySelector('.material-price').value;
+        const qty = group.querySelector('.material-qty').value;
+        const total = (parseFloat(price) * parseInt(qty)) || 0;
+        doc.text(`客供料${index + 1}: 單價 $${price}, 數量: ${qty}, 小計: $${total.toFixed(2)}`, 10, yPosition);
+        yPosition += 10;
     });
 
-    doc.save('報價單.pdf');
+    // 添加不同 MOQ 與利潤
+    document.querySelectorAll('.quantity').forEach((q, i) => {
+        const qty = q.value;
+        const profit = document.querySelectorAll('.profit')[i].value;
+        doc.text(`MOQ: ${qty}, 利潤: ${profit}%`, 10, yPosition);
+        yPosition += 10;
+    });
+
+    // 保存 PDF
+    doc.save("報價單.pdf");
 });
