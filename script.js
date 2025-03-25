@@ -50,13 +50,3 @@ document.getElementById('addQuantityBtn').addEventListener('click', function () 
     newQuantityGroup.appendChild(profitInput);
     quantityFields.appendChild(newQuantityGroup);
 });
-
-// 生成 PNG
-document.getElementById('generatePNGBtn').addEventListener('click', function () {
-    html2canvas(document.getElementById('pricingResults'), { scale: 2 }).then(canvas => {
-        const link = document.createElement('a');
-        link.href = canvas.toDataURL('image/png');
-        link.download = '報價計算結果.png';
-        link.click();
-    });
-});
