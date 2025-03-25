@@ -56,22 +56,36 @@ document.getElementById('generatePDFBtn').addEventListener('click', function () 
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
-    // 获取表单数据
-    const quoteDate = document.getElementById('quoteDate').value || '未填寫';
-    const salesPerson = document.getElementById('salesPerson').value || '未填寫';
+    // 取得表單資料
+    const date = document.getElementById('quoteDate').value || '未填寫';
+    const sales = document.getElementById('salesPerson').value || '未填寫';
+    const moq = document.getElementById('moq').value || '未填寫';
     
-    // 设置字体和字号
-    doc.setFont('Helvetica');
-    doc.setFontSize(12);
+    // 設定標題
+    doc.setFontSize(18);
+    doc.setFont("helvetica", "bold");
+    doc.text("業務報價單", 80, 15);
 
-    // 添加標題
-    doc.text("報價單", 10, 10);
-    
-    // 添加日期和業務信息
-    doc.text(`日期: ${quoteDate}`, 10, 20);
-    doc.text(`業務: ${salesPerson}`, 10, 30);
+    // 生成表格資料
+    const tableData = [
+        ["項目", "內容"],
+        ["日期", date],
+        ["業務", sales],
+        ["MOQ (最小訂購量)", moq]
+    ];
 
-    let yPosition = 40;
+    // 插入表格
+    doc.autoTable({
+        head: [tableData[0]],
+        body: tableData.slice(1),
+        startY: 30,
+        theme: "grid",
+        styles: { fontSize: 12, cellPadding: 5 },
+        headStyles: { fillColor: [41, 128, 185], textColor: [255, 255, 255] },
+        alternateRowStyles: { fillColor: [240, 240, 240] }
+    });
+
+    let yPosition = doc.lastAutoTable.finalY + 10; // Adjust position for next content
     
     // 添加客供料信息
     document.querySelectorAll('.material-group').forEach((group, index) => {
@@ -90,6 +104,6 @@ document.getElementById('generatePDFBtn').addEventListener('click', function () 
         yPosition += 10;
     });
 
-    // 保存 PDF
+    // 下載 PDF
     doc.save("報價單.pdf");
 });
