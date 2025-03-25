@@ -1,3 +1,4 @@
+// 計算報價
 document.getElementById('calculateBtn').addEventListener('click', function () {
     const factoryCost = parseFloat(document.getElementById('factoryCost').value) || 0;
     
