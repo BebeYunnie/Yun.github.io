@@ -1,69 +1,63 @@
 body {
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-}
-
-.container {
-    width: 80%;
-    max-width: 800px;
-    margin: 20px auto;
     padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-h1, h2, h3 {
+    margin: 0;
+    background-color: #f4f4f4;
     text-align: center;
 }
 
-label {
-    display: block;
-    margin: 10px 0 5px;
+.container {
+    max-width: 400px;
+    margin: auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-input[type="date"],
-input[type="text"],
-input[type="number"] {
+input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
     width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    box-sizing: border-box;
+    padding: 10px;
+    margin-top: 10px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
+button:hover {
+    background: #0056b3;
+}
+
+.quantity-group,
 .material-group {
     display: flex;
+    justify-content: space-between;
     margin-bottom: 10px;
 }
 
 .material-group input {
-    width: calc(50% - 10px);
-    margin-right: 10px;
+    width: 45%;
 }
 
-.material-group span {
-    align-self: center;
+.material-total {
+    margin-left: 10px;
+    font-weight: bold;
+    color: #333;
 }
 
-button {
-    padding: 10px 20px;
-    margin: 10px 5px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-button:hover {
-    background-color: #45a049;
-}
-
-#pricingResults {
-    display: none;
-}
-
-#pricingResults p {
-    font-size: 18px;
+@media (max-width: 600px) {
+    .container {
+        width: 100%;
+        padding: 15px;
+    }
 }
