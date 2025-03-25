@@ -1,67 +1,63 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
-    margin: 0;
-    padding: 0;
-}
-
-.container {
-    width: 80%;
-    margin: 50px auto;
-    background-color: #fff;
     padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
+    margin: 0;
+    background-color: #f4f4f4;
     text-align: center;
 }
 
-label {
-    font-weight: bold;
-    display: block;
-    margin: 10px 0 5px;
+.container {
+    max-width: 400px;
+    margin: auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-input[type="number"], input[type="text"], input[type="date"] {
-    width: 100%;
+input {
+    width: calc(100% - 20px);
     padding: 10px;
-    margin-bottom: 15px;
+    margin: 5px 0;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
 
 button {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    background: #007bff;
+    color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-top: 10px;
 }
 
 button:hover {
-    background-color: #45a049;
+    background: #0056b3;
 }
 
+.quantity-group,
 .material-group {
-    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.material-group input {
+    width: 45%;
 }
 
 .material-total {
-    display: block;
-    margin-top: 10px;
+    margin-left: 10px;
     font-weight: bold;
-    color: green;
+    color: #333;
 }
 
-#quantityFields {
-    margin-bottom: 20px;
-}
-
-#pricingResults {
-    margin-top: 30px;
-    padding: 20px;
-    background-color: #f0f8ff;
+@media (max-width: 600px) {
+    .container {
+        width: 100%;
+        padding: 15px;
+    }
 }
