@@ -23,7 +23,7 @@ document.getElementById('calculateBtn').addEventListener('click', function () {
         const totalPrice = totalCost + (profit / 100) * totalCost;
 
         if (quantity > 0) {
-            pricingResults += `<p>MOQ: ${quantity} | 利潤: ${profit}% | 總價: $${totalPrice.toFixed(2)}</p>`;
+            pricingResults += `<p>MOQ: ${quantity} | 利潤: ${profit}% | 單價: $${totalPrice.toFixed(2)}</p>`;
         }
     });
 
@@ -53,7 +53,7 @@ document.getElementById('addQuantityBtn').addEventListener('click', function () 
 
 // 生成 PNG
 document.getElementById('generatePNGBtn').addEventListener('click', function () {
-    // 获取内容区域（可选：只生成特定区域的图像）
+    // 获取内容区域（包括日期、业务、MOQ和单价信息）
     const content = document.querySelector('.container');
 
     // 使用 html2canvas 将页面区域渲染成图像
