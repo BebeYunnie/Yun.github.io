@@ -47,3 +47,29 @@ document.getElementById('generatePNGBtn').addEventListener('click', function () 
         console.error("下載失敗:", error);
     });
 });
+
+// 新增數量區間
+document.getElementById('addQuantityBtn').addEventListener('click', function () {
+    const quantityFields = document.getElementById('quantityFields');
+    const quantityGroup = document.createElement('div');
+    quantityGroup.classList.add('quantity-group');
+    
+    // 創建數量和利潤輸入欄位
+    const quantityInput = document.createElement('input');
+    quantityInput.type = 'number';
+    quantityInput.classList.add('quantity');
+    quantityInput.placeholder = '數量 MOQ';
+    quantityInput.value = '0';
+    
+    const profitInput = document.createElement('input');
+    profitInput.type = 'number';
+    profitInput.classList.add('profit');
+    profitInput.placeholder = '利潤 (%)';
+    profitInput.value = '0';
+    
+    quantityGroup.appendChild(quantityInput);
+    quantityGroup.appendChild(profitInput);
+    
+    // 將新區間添加到數量區域
+    quantityFields.appendChild(quantityGroup);
+});
