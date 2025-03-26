@@ -52,7 +52,7 @@ document.getElementById('calculateBtn').addEventListener('click', function () {
         const totalPrice = totalCost + (profit / 100) * totalCost;
 
         if (quantity > 0) {
-            pricingResults += `<p>MOQ: ${quantity} | 利潤: ${profit}% | 單價: $${totalPrice.toFixed(2)}</p>`;
+            pricingResults += `<p>MOQ: ${quantity}  | 單價: $${totalPrice.toFixed(2)}| 利潤: ${profit}%</p>`;
         }
     });
 
