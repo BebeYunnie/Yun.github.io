@@ -49,7 +49,7 @@ document.getElementById('calculateBtn').addEventListener('click', function () {
     quantities.forEach((quantityInput, index) => {
         const quantity = parseInt(quantityInput.value) || 0;
         const profit = parseFloat(profits[index].value) || 0;
-        const totalPrice = totalCost + (profit / 100) * totalCost;
+        const totalPrice =  totalCost / (1-profit / 100) ;
 
         if (quantity > 0) {
             pricingResults += `<p>MOQ: ${quantity}  | 單價: $${totalPrice.toFixed(2)}| 利潤: ${profit}%</p>`;
