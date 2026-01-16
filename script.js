@@ -28,35 +28,51 @@ document.getElementById('addMaterialBtn').addEventListener('click', function () 
 
 // 計算報價
 document.getElementById('calculateBtn').addEventListener('click', function () {
+    // 1. 取得基礎成本
     const factoryCost = parseFloat(document.getElementById('factoryCost').value) || 0;
+    const otherCosts = parseFloat(document.getElementById('otherCosts').value) || 0;
     
-    let totalMaterialCost = 0;
+    // 2. 計算客供料總成本 (客供料總額 * 1.03)
+    let rawMaterialSubtotal = 0;
     document.querySelectorAll('.material-group').forEach(group => {
         const price = parseFloat(group.querySelector('.material-price').value) || 0;
         const qty = parseInt(group.querySelector('.material-qty').value) || 0;
-        const total = price * qty;
-        group.querySelector('.material-total').textContent = `$${total.toFixed(2)}`;
-        totalMaterialCost += total;
+        const subtotal = price * qty;
+        group.querySelector('.material-total').textContent = `$${subtotal.toFixed(2)}`;
+        rawMaterialSubtotal += subtotal;
     });
+    const totalMaterialCost = rawMaterialSubtotal * 1.03; 
 
-    const otherCosts = parseFloat(document.getElementById('otherCosts').value) || 0;
-    const totalCost = factoryCost + totalMaterialCost + otherCosts;
+    // 3. 專案總支出成本
+    const totalProjectCost = factoryCost + totalMaterialCost + otherCosts;
 
+    // 4. 計算各個 MOQ 的「報價單價」
     const quantities = document.querySelectorAll('.quantity');
     const profits = document.querySelectorAll('.profit');
     let pricingResults = '';
 
     quantities.forEach((quantityInput, index) => {
         const quantity = parseInt(quantityInput.value) || 0;
-        const profit = parseFloat(profits[index].value) || 0;
-        const totalPrice =  totalCost / (1-profit / 100) ;
+        const profitRate = (parseFloat(profits[index].value) || 0) / 100;
 
         if (quantity > 0) {
-            pricingResults += `<p>MOQ: ${quantity}  | 單價: $${totalPrice.toFixed(2)}| 利潤: ${profit}%</p>`;
+            // A. 先算出該數量下的「單位成本」
+            const unitCost = totalProjectCost / quantity;
+            
+            // B. 套用公式：單價 = 單位成本 / (1 - 利潤率)
+            const unitPrice = unitCost / (1 - profitRate);
+
+            pricingResults += `
+                <div class="result-item" style="padding: 12px; border-bottom: 1px solid #eee; font-family: sans-serif;">
+                    <span style="display: inline-block; min-width: 120px;"><strong>MOQ: ${quantity}</strong></span>
+                    <span style="color: #2c3e50;">單價: </span>
+                    <span style="color: #e74c3c; font-weight: bold; font-size: 1.2em;">$${unitPrice.toFixed(2)}</span>
+                    <span style="color: #95a5a6; margin-left: 20px; font-size: 0.9em;">(利潤率: ${profitRate * 100}%)</span>
+                </div>`;
         }
     });
 
-    document.getElementById('pricingResults').innerHTML = `<h2>報價結果</h2>${pricingResults}`;
+    document.getElementById('pricingResults').innerHTML = `<h2>報價單價結果</h2>${pricingResults}`;
 });
 
 // 新增報價區間
